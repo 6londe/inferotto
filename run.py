@@ -6,8 +6,7 @@ import keras
 from keras import models, layers
 from sklearn.model_selection import train_test_split
 
-
-try:
+def get_data():
     BASE_URL = "http://www.nlotto.co.kr/common.do?method=getLottoNumber&drwNo="
     DATA_PATH = "./data/data.json"
 
@@ -30,8 +29,9 @@ try:
             time.sleep(1)    
         drwNo = drwNo + 1
 
-finally:
-    print("Train with last " + str(len(data)) + " data..")
+    return data, drwNo
+
+def get_numbers(drwNo):
 
     x = []
     y = []
@@ -51,7 +51,7 @@ finally:
         layers.Dense(45, input_shape=(1,), activation='softmax'),
     ])
     model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
-    model.fit(x_train, y_train, epochs=10000, verbose=1, validation_split=0.1)
+    model.fit(x_train, y_train, epochs=1000, verbose=1, validation_split=0.1)
     result = model.predict([drwNo])
     print(result)
     result = result[0].tolist()
@@ -62,5 +62,18 @@ finally:
         result[idx] = -1
         numbers.append(idx+1)
 
-    print("=== " + str(drwNo) + "st Numbers Prediction ===")
-    print(numbers)
+    numbers.sort()
+    return numbers
+
+if __name__ == "__main__":
+    try:
+        data, drwNo = get_data()
+    finally:
+        print("Train with last " + str(len(data)) + " data..")
+
+        predictions = []
+        for i in range(0, 5):
+            predictions.append(get_numbers(drwNo))
+
+        print("=== " + str(drwNo) + "st Numbers Prediction ===")
+        print(predictions)
