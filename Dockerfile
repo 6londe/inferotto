@@ -4,4 +4,4 @@ RUN pip install keras requests sklearn numpy
 
 WORKDIR /app
 COPY . .
-CMD python infer.py
+CMD python run.py
