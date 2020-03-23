@@ -1,0 +1,1 @@
+docker build -t 6londe/inferoto . && docker run --rm -v $(pwd):/app 6londe/inferoto
