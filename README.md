@@ -1,4 +1,4 @@
-# inferoto
+# Inferotto
 
 ### Prerequisite
 

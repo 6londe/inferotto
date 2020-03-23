@@ -1,7 +1,6 @@
-FROM continuumio/anaconda3:2020.02
+FROM tensorflow/tensorflow:1.15.2-py3
 
-RUN pip install keras requests sklearn
-RUN pip install tensorflow
+RUN pip install keras requests sklearn numpy
 
 WORKDIR /app
 COPY . .
