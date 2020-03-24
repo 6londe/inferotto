@@ -55,15 +55,7 @@ def get_numbers(drwNo):
     result = model.predict([drwNo])
     print(result)
     result = result[0].tolist()
-
-    numbers = []
-    for n in range(1, 7):
-        idx = result.index(max(result))
-        result[idx] = -1
-        numbers.append(idx+1)
-
-    numbers.sort()
-    return numbers
+    return result
 
 if __name__ == "__main__":
     try:
@@ -71,9 +63,12 @@ if __name__ == "__main__":
     finally:
         print("Train with last " + str(len(data)) + " data..")
 
-        predictions = []
-        for i in range(0, 5):
-            predictions.append(get_numbers(drwNo))
+        result = get_numbers(drwNo)
+        numbers = []
+        for n in range(1, 7):
+            idx = result.index(max(result))
+            result[idx] = -1
+            numbers.append(idx+1)
 
         print("=== " + str(drwNo) + "st Numbers Prediction ===")
-        print(predictions)
+        print(numbers)
